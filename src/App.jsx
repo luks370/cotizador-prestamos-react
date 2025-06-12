@@ -1,12 +1,17 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "./components/Header.jsx"
 import Button from "./components/Button.jsx"
-import {formatearDinero} from "./helpers/index.js" // como es .js con poner solo la carpeta es suficiente
+import {formatearDinero, calcularTotalPagar} from "./helpers/index.js" // como es .js con poner solo la carpeta es suficiente
 
 function App() {
   const [cantidad, setCantidad] = useState(10000); // hacemos destructuring de useState porque devuleve un arreglo 
   const [meses, setMeses] = useState(6); //le agrega selected react
+  const [total, setTotal] = useState(calcularTotalPagar(cantidad, meses))
 
+  useEffect( () => {
+    const resultadoTotalPagar = calcularTotalPagar(cantidad, meses);
+    setTotal(resultadoTotalPagar)
+  }, [cantidad, meses]) // siempre va un callback (funcion flecha) y un arreglo de dependencias
   const MIN = 0;
   const MAX = 20000;
   const STEP = 100
@@ -15,14 +20,14 @@ function App() {
     setCantidad(parseInt(e.target.value))
   }
 
-  function handlerClickDecremento(e){
+  function handlerClickDecremento(){
     const valor = cantidad - STEP
     if(valor >= MIN){
       setCantidad(valor)
     }
   }
 
-  function handlerClickIncremento(e){
+  function handlerClickIncremento(){
     const valor = cantidad + STEP
     if(valor <= MAX){
       setCantidad(valor)
@@ -72,6 +77,16 @@ function App() {
         <option value="12">12 Meses</option>
         <option value="24">24 Meses</option>
       </select>
+
+      <div className="my-5 space-y-3 bg-gray-50 p-5">
+        <h2 className="text-2xl font-extrabold text-gray-500 text-center">
+          Resumen <span className="text-indigo-600">de Pagos</span>
+        </h2>
+
+        <p className="text-center font-bold text-xl text-gray-500">{meses} Meses</p>
+        <p className="text-center font-bold text-xl text-gray-500">{formatearDinero(total)} Total a Pagar</p>
+        <p className="text-center font-bold text-xl text-gray-500">Pagos Mensuales</p>
+      </div>
 
     </div>
   )
