@@ -7,11 +7,17 @@ function App() {
   const [cantidad, setCantidad] = useState(10000); // hacemos destructuring de useState porque devuleve un arreglo 
   const [meses, setMeses] = useState(6); //le agrega selected react
   const [total, setTotal] = useState(calcularTotalPagar(cantidad, meses))
+  const [pago, setPago] = useState(0)
 
   useEffect( () => {
     const resultadoTotalPagar = calcularTotalPagar(cantidad, meses);
-    setTotal(resultadoTotalPagar)
+    setTotal(resultadoTotalPagar)    
   }, [cantidad, meses]) // siempre va un callback (funcion flecha) y un arreglo de dependencias
+  useEffect( () => {
+    //calcular pago mensual
+    setPago(total / meses)
+  }, [total])
+
   const MIN = 0;
   const MAX = 20000;
   const STEP = 100
@@ -85,7 +91,7 @@ function App() {
 
         <p className="text-center font-bold text-xl text-gray-500">{meses} Meses</p>
         <p className="text-center font-bold text-xl text-gray-500">{formatearDinero(total)} Total a Pagar</p>
-        <p className="text-center font-bold text-xl text-gray-500">Pagos Mensuales</p>
+        <p className="text-center font-bold text-xl text-gray-500">{formatearDinero(pago)} Pagos Mensuales</p>
       </div>
 
     </div>
