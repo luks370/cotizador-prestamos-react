@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Header from "./components/Header.jsx"
+import Button from "./components/Button.jsx"
 
 function App() {
   const [cantidad, setCantidad] = useState(10000); // hacemos destructuring de useState porque devuleve un arreglo 
@@ -12,9 +13,34 @@ function App() {
     setCantidad(parseInt(e.target.value))
   }
 
+  function handlerClickDecremento(e){
+    const valor = cantidad - STEP
+    if(valor >= MIN){
+      setCantidad(valor)
+    }
+  }
+
+  function handlerClickIncremento(e){
+    const valor = cantidad + STEP
+    if(valor <= MAX){
+      setCantidad(valor)
+    }
+  }
+
   return (
     <div className="my-20 max-w-lg mx-auto bg-white shadow p-10">
       < Header />
+
+      <div className="flex justify-between my-6">
+        <Button 
+          operador="-"
+          fn={handlerClickDecremento}
+        />
+        <Button 
+          operador="+"
+          fn={handlerClickIncremento}
+        />
+      </div>
 
       <input 
         type="range"
