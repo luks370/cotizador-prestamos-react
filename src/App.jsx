@@ -5,6 +5,7 @@ import {formatearDinero} from "./helpers/index.js" // como es .js con poner solo
 
 function App() {
   const [cantidad, setCantidad] = useState(10000); // hacemos destructuring de useState porque devuleve un arreglo 
+  const [meses, setMeses] = useState(6); //le agrega selected react
 
   const MIN = 0;
   const MAX = 20000;
@@ -57,6 +58,20 @@ function App() {
       <p className="text-center font-extrabold my-10 text-indigo-600 text-6xl">
         {formatearDinero(cantidad)}
       </p>
+
+      <h2 className="text-2xl font-extrabold text-gray-500 text-center">
+        Elegi un <span className="text-indigo-600">Plazo</span> a pagar
+      </h2>
+
+      <select
+        className="mt-5 w-full p-2 bg-white border border-gray-300 rounded text-center text-xl font-bold text-gray-500"
+        value={meses}
+        onChange={ e => setMeses(parseInt(e.target.value))}
+      > 
+        <option value="6">6 Meses</option> //le agrega propiedad selected
+        <option value="12">12 Meses</option>
+        <option value="24">24 Meses</option>
+      </select>
 
     </div>
   )
