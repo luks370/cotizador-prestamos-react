@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Header from "./components/Header.jsx"
 import Button from "./components/Button.jsx"
+import {formatearDinero} from "./helpers/index.js" // como es .js con poner solo la carpeta es suficiente
 
 function App() {
   const [cantidad, setCantidad] = useState(10000); // hacemos destructuring de useState porque devuleve un arreglo 
@@ -53,7 +54,9 @@ function App() {
       />
 
       
-      <p className="text-center font-extrabold my-10 text-indigo-600 text-6xl">{cantidad}</p>
+      <p className="text-center font-extrabold my-10 text-indigo-600 text-6xl">
+        {formatearDinero(cantidad)}
+      </p>
 
     </div>
   )
